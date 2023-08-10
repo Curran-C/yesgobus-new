@@ -1,0 +1,20 @@
+.titleContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    h1 {
+        color: #fd5901;
+        font-size: 40px;
+    }
+    h2 {
+        font-size: 30px;
+    }
+    p {
+        line-height: 30px;
+        width: 1300px;
+        text-align: center;
+        font-size: 20px;
+        letter-spacing: 1px;
+    }
+}
