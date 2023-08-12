@@ -22,7 +22,7 @@ const Navbar = () => {
       </div>
 
       <div className="right">
-        <a href="/signup">
+        <a href="/kyc">
           <Button text="Join as Cab Driver" />
         </a>
       </div>
