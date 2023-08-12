@@ -13,11 +13,7 @@ const AadharModal = ({ onCancel, typeOfDocument, user, setUser }) => {
       "x-api-version": "1.0",
     },
   };
-
-  let autherizaionConfig = {
-    headers: {},
-  };
-
+  
   const sendOtp = async () => {
     console.log(user?.aadhar);
     try {
@@ -25,23 +21,43 @@ const AadharModal = ({ onCancel, typeOfDocument, user, setUser }) => {
       const authTokenOne = await axios.post(
         "https://api.sandbox.co.in/authenticate",
         {
-          aadhaar_number: user?.aadhaar,
+          aadhaar_number: user?.aadhar,
         },
         authenticateConfig
       );
-      console.log(authTokenOne);
+      console.log("one: ", authTokenOne);
+      // *authorize
       const authTokenTwo = await axios.post(
         `https://api.sandbox.co.in/authorize?request_token=${authTokenOne?.data.access_token}`,
         { dat: "dat" },
         {
           headers: {
+            Authorization: authTokenOne?.data.access_token,
             accept: "application/json",
             "x-api-key": "key_live_MJ9gDUtmmvuOPurEsZbPvamtObI4ZRYr",
             "x-api-version": "1.0",
           },
         }
       );
-      console.log(authTokenTwo);
+      console.log("two: ", authTokenTwo);
+
+      // *verifyotp
+      const refIdForOtp = await axios.post(
+        `https://api.sandbox.co.in/kyc/aadhaar/okyc/otp`,
+        {
+          aadhaar_number: user?.aadhar,
+        },
+        {
+          headers: {
+            Authorization: authTokenTwo?.data.access_token,
+            accept: "application/json",
+            "content-type": "application/json",
+            "x-api-key": "key_live_MJ9gDUtmmvuOPurEsZbPvamtObI4ZRYr",
+            "x-api-version": "1.0",
+          },
+        }
+      );
+      console.log(refIdForOtp);
     } catch (err) {
       console.log(err);
     }
