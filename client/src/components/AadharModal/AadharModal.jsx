@@ -4,27 +4,44 @@ import "./AadharModal.scss";
 import axios from "axios";
 
 const AadharModal = ({ onCancel, typeOfDocument, user, setUser }) => {
-  let config = {
+  let authenticateConfig = {
     headers: {
+      accept: "application/json",
+      "content-type": "application/json",
       "x-api-secret": "secret_live_0t1JqBUOBcMcOoB3dlmDbno4FPT5ezOc",
       "x-api-key": "key_live_MJ9gDUtmmvuOPurEsZbPvamtObI4ZRYr",
       "x-api-version": "1.0",
     },
   };
 
+  let autherizaionConfig = {
+    headers: {},
+  };
+
   const sendOtp = async () => {
     console.log(user?.aadhar);
-
     try {
       // *authenticate
-      const res = await axios.post(
+      const authTokenOne = await axios.post(
         "https://api.sandbox.co.in/authenticate",
         {
           aadhaar_number: user?.aadhaar,
         },
-        config
+        authenticateConfig
       );
-      console.log(res);
+      console.log(authTokenOne);
+      const authTokenTwo = await axios.post(
+        `https://api.sandbox.co.in/authorize?request_token=${authTokenOne?.data.access_token}`,
+        { dat: "dat" },
+        {
+          headers: {
+            accept: "application/json",
+            "x-api-key": "key_live_MJ9gDUtmmvuOPurEsZbPvamtObI4ZRYr",
+            "x-api-version": "1.0",
+          },
+        }
+      );
+      console.log(authTokenTwo);
     } catch (err) {
       console.log(err);
     }

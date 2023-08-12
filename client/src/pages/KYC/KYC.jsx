@@ -83,6 +83,12 @@ const KYC = () => {
             />
             <Input
               onChanged={setUser}
+              givenName={"password"}
+              title={"Password"}
+              type={"number"}
+            />
+            <Input
+              onChanged={setUser}
               givenName={"pincode"}
               title={"Pin Code"}
               type={"number"}
