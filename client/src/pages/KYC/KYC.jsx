@@ -1,5 +1,6 @@
 import { Navigate, useNavigate } from "react-router-dom";
 import { back, front } from "../../assets/KYC";
+import axios from "axios";
 import {
   AadharModal,
   Button,
@@ -21,6 +22,14 @@ const KYC = () => {
 
   // *states
   const [user, setUser] = useState({});
+  const handleRegister = async () => {
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/user/signup`, user); 
+      alert(response.data.message);
+    } catch (error) {
+      console.error("Error registering user:", error);
+    }
+  };
 
   return (
     <div className="KYC">
@@ -85,7 +94,7 @@ const KYC = () => {
               onChanged={setUser}
               givenName={"password"}
               title={"Password"}
-              type={"number"}
+              type={"password"}
             />
             <Input
               onChanged={setUser}
@@ -163,7 +172,7 @@ const KYC = () => {
         </div>
       </div>
       <div className="nextButton">
-        <Button onClicked={() => console.log(user)} text={"Next"} />
+        <Button onClicked={handleRegister} text={"Next"} />
       </div>
     </div>
   );
