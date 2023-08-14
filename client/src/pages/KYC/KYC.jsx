@@ -1,5 +1,6 @@
 import { Navigate, useNavigate } from "react-router-dom";
 import { back, front } from "../../assets/KYC";
+import axios from "axios";
 import {
   AadharModal,
   Button,
@@ -8,7 +9,7 @@ import {
   SignModal,
 } from "../../components";
 import "./KYC.scss";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const KYC = () => {
   const navigate = useNavigate();
@@ -18,10 +19,49 @@ const KYC = () => {
   const [showAadharModal, setShowAadharModal] = useState(false);
   const [showPancardModal, setShowPancardModal] = useState(false);
   const [showDLModal, setShowDLModal] = useState(false);
+  const [accessToken, setAccessToken] = useState("");
 
   // *states
   const [user, setUser] = useState({});
+  const handleRegister = async () => {
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/user/signup`, user);
+      alert(response.data.message);
+    } catch (error) {
+      console.error("Error registering user:", error);
+    }
+  };
 
+  useEffect(() => {
+    const authenticateAndGetToken = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/kyc/authenticate`);
+        setAccessToken(response.data.access_token);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+
+    authenticateAndGetToken();
+  }, []);
+  
+  const verifyBank = async () => {
+    try {
+      const requestData = {
+        account_number: user.bankAccNum,
+        ifsc: user.ifsc,  
+        access_token: accessToken, 
+      };
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/kyc/bank/verify`, requestData);
+      if (response.data?.data?.message === 'Bank Account details verified successfully.') {
+        alert("Account verified");
+      } else {
+        alert("Invalid");
+      }
+    } catch (err) {
+      console.error("Error while verifying bank details:", err);
+    }
+  }
   return (
     <div className="KYC">
       <Navbar />
@@ -85,7 +125,7 @@ const KYC = () => {
               onChanged={setUser}
               givenName={"password"}
               title={"Password"}
-              type={"number"}
+              type={"password"}
             />
             <Input
               onChanged={setUser}
@@ -156,14 +196,14 @@ const KYC = () => {
               onChanged={setUser}
               givenName={"ifsc"}
               title={"IFSC Code"}
-              type={"number"}
+              type={"text"}
             />
           </div>
-          <Button text={"Verify"} />
+          <Button onClicked={verifyBank} text={"Verify"} />
         </div>
       </div>
       <div className="nextButton">
-        <Button onClicked={() => navigate("/kyc/payment")} text={"Next"} />
+        <Button onClicked={handleRegister} text={"Next"} />
       </div>
     </div>
   );

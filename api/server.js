@@ -6,7 +6,7 @@ import cors from "cors";
 
 //routes
 import userRoutes from "../api/routes/user.routes.js";
-import aadhayKYCroutes from "./routes/Aadharroutes.routes.js";
+import kycroutes from "./routes/verifykyc.routes.js";
 
 dotenv.config();
 const app = express();
@@ -29,7 +29,7 @@ app.use(cors({
 }));
 
 app.use("/api/user", userRoutes);
-app.use("/api/aadharkyc", aadhayKYCroutes);
+app.use("/api/kyc", kycroutes);
 
 app.listen(PORT, () => {
   connect();
