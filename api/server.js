@@ -1,19 +1,37 @@
 import express from "express";
-import cors from "cors";
+import mongoose from "mongoose";
 import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
+import cors from "cors";
 
-import aadhayKYCroutes from "../api/Aadharroutes/Aadharroutes.routes.js";
+//routes
+import userRoutes from "../api/routes/user.routes.js";
+import aadhayKYCroutes from "./routes/Aadharroutes.routes.js";
 
 dotenv.config();
 const app = express();
 const PORT = 8000;
 
-app.use(express.json());
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+const connect = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log("connected to mongodb server");
+  } catch (err) {
+    console.log(err);
+  }
+};
 
-//routes
+app.use(express.json());
+app.use(cookieParser());
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true
+}));
+
+app.use("/api/user", userRoutes);
 app.use("/api/aadharkyc", aadhayKYCroutes);
 
 app.listen(PORT, () => {
+  connect();
   console.log(`server started on port ${PORT}`);
 });
