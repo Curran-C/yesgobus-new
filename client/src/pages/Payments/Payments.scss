@@ -43,3 +43,39 @@
         }
     }
 }
+
+@media (max-width: 1024px) {
+    .Payments {
+        .container {
+            align-items: center;
+            .wrapper {
+                flex-direction: column;
+                gap: 40px;
+                .left,
+                .right {
+                    width: 80%;
+                    .amounts {
+                        
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 426px) {
+    .Payments {
+        .container {
+            align-items: center;
+            .wrapper {
+                flex-direction: column;
+                gap: 40px;
+                .left,
+                .right {
+                    width: 280px;
+                    padding: 50px 10px;
+                }
+            }
+        }
+    }
+}

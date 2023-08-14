@@ -21,3 +21,10 @@
         font-size: 15px;
     }
 }
+
+@media (max-width: 320px) {
+    .simpleCard {
+        padding: 30px;
+        width: 200px;
+    }
+}

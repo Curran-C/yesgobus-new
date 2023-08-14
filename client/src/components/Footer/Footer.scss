@@ -54,3 +54,21 @@
         margin-top: 10px;
     }
 }
+
+@media (max-width: 768px) {
+    .footer {
+        align-items: center;
+        .footerContainer {
+            align-items: center;
+            text-align: center;
+            flex-direction: column;
+            gap: 30px;
+            .aboveFooterImages {
+                align-items: center;
+            }
+            .input {
+                margin-left: 30px;
+            }
+        }
+    }
+}

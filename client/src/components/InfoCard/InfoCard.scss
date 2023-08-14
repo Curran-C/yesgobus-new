@@ -6,16 +6,31 @@
     width: 100px;
     gap: 5px;
     text-align: center;
-    img {
-        height: 30px;
-    }
-    .infotitle {
-        font-size: 15px;
-        letter-spacing: 1px;
+    div {
+        img {
+            height: 30px;
+        }
+        .infotitle {
+            font-size: 15px;
+            letter-spacing: 1px;
+        }
     }
     .infosubtitle {
         font-weight: 800;
         font-size: 13px;
         letter-spacing: 1px;
+    }
+}
+
+@media (max-width: 426px) {
+    .infoCard {
+        flex-direction: row;
+        align-items: center;
+        width: 90%;
+        gap: 10px;
+        justify-content: center;
+        img {
+            height: 20px;
+        }
     }
 }

@@ -14,3 +14,15 @@
         border: 0.5px solid lightgray;
     }
 }
+
+@media (max-width: 426px) {
+    .Input {
+        span {
+            font-size: 12px;
+        }
+        input {
+            width: 200px;
+            padding: 10px 15px;
+        }
+    }
+}

@@ -93,3 +93,73 @@
         }
     }
 }
+
+@media (max-width: 1024px) {
+    .KYC {
+        .details,
+        .bankingDetails,
+        .id {
+            width: 800px;
+            .detailsContainer,
+            .bankingDetailsContainer,
+            .idContainer {
+                .inputs {
+                    flex-direction: column;
+                }
+                .idWrapper {
+                    flex-direction: column;
+                }
+            }
+        }
+    }
+}
+@media (max-width: 768px) {
+    .KYC {
+        .details,
+        .bankingDetails,
+        .id {
+            width: 600px;
+        }
+    }
+}
+
+@media (max-width: 426px) {
+    .KYC {
+        .details,
+        .bankingDetails,
+        .id {
+            gap: 20px;
+            h1 {
+                font-size: 20px;
+            }
+            p {
+                font-size: 13px;
+            }
+            width: 280px;
+            padding: 20px;
+            .detailsContainer,
+            .bankingDetailsContainer,
+            .idContainer {
+                .inputs {
+                    flex-direction: column;
+                }
+                .idWrapper {
+                    flex-direction: column;
+                    .left {
+                        .buttons {
+                            flex-direction: column;
+                        }
+                    }
+                    .right {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        img {
+                            height: 150px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

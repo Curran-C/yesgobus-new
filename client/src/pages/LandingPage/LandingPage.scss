@@ -17,8 +17,8 @@
         .left {
             position: absolute;
             display: flex;
-            gap: 30px;
             flex-direction: column;
+            gap: 30px;
             align-items: start;
             top: 20vh;
             left: 80px;
@@ -139,6 +139,92 @@
             }
             a {
                 color: #fd5901;
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .landingPage {
+        .hero {
+            .left {
+                width: 200px;
+                h1 {
+                    font-size: 20px;
+                }
+            }
+        }
+        .whatWeOffer {
+            margin-top: 20px;
+        }
+        .appOnTheMarket {
+            .wrapper {
+                flex-direction: column;
+            }
+        }
+        .carClasses {
+            .cards {
+                flex-direction: column;
+                gap: 40px;
+            }
+        }
+        .aboveFooter {
+            flex-direction: column;
+            align-items: center;
+            justify-content: safe;
+            gap: 40px;
+            hr {
+                // width: 100%;
+                display: none;
+            }
+        }
+    }
+}
+
+@media (max-width: 426px) {
+    .landingPage {
+        .hero {
+            margin-top: -30px;
+            .left {
+                top: 5vh;
+                left: 10px;
+                gap: 20px;
+                h1 {
+                    font-size: 15px;
+                }
+                button {
+                    padding: 10px;
+                    font-size: 9px;
+                }
+            }
+            .heroimg {
+                object-fit: cover;
+            }
+        }
+        .whatWeOffer {
+            .wrapper {
+                width: 100%;
+                flex-direction: column;
+                justify-content: center;
+                gap: 40px;
+                align-items: center;
+                .infoCard {
+                    width: 90%;
+                }
+            }
+        }
+        .forDrivers {
+            .wrapper {
+                flex-direction: column;
+                gap: 40px;
+            }
+        }
+        .appOnTheMarket {
+            img {
+                width: 300px;
+            }
+            .downloads {
+                flex-direction: column;
             }
         }
     }

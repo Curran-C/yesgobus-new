@@ -22,6 +22,8 @@
         justify-content: center;
         .modalwrapper {
             background-color: #fff;
+            overflow-y: scroll;
+
             border-radius: 25px;
             padding: 20px 60px;
             position: absolute;
@@ -42,6 +44,45 @@
                 margin-top: 20px;
                 display: flex;
                 gap: 10px;
+            }
+        }
+    }
+}
+
+@media (max-width: 1024px) {
+    .PaymentModal {
+        .modalcontainer {
+            .modalwrapper {
+                h1 {
+                    font-size: 20px;
+                }
+                h2 {
+                    font-size: 15px;
+                }
+                .cardsWithText {
+                    display: flex;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 426px) {
+    .PaymentModal {
+        .modalcontainer {
+            .modalwrapper {
+                overflow-y: scroll;
+                h1 {
+                    font-size: 20px;
+                }
+                h2 {
+                    font-size: 15px;
+                }
+                .cardsWithText {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                }
             }
         }
     }

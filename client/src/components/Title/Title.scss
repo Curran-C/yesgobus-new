@@ -18,3 +18,29 @@
         letter-spacing: 1px;
     }
 }
+
+@media (max-width: 768px) {
+    .titleContainer {
+        h1 {
+            font-size: 30px;
+            text-align: center;
+        }
+        h2 {
+            font-size: 20px;
+            text-align: center;
+        }
+        p {
+            width: 450px;
+            text-align: center;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .titleContainer {
+        p {
+            width: 310px;
+            font-size: 15px;
+        }
+    }
+}

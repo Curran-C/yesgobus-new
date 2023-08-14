@@ -154,6 +154,7 @@ const LandingPage = () => {
           />
         </div>
       </div>
+
       <div>
         <div className="aboveFooter">
           <img src={logo} alt="" />

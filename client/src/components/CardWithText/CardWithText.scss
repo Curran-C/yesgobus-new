@@ -19,3 +19,23 @@
         }
     }
 }
+
+@media (max-width: 1024px) {
+    .CardWithText {
+        .billing,
+        .address {
+            gap: 3px;
+            h1 {
+                font-size: 30px;
+            }
+            p {
+                font-size: 13px;
+            }
+            .text {
+                gap: 8px;
+            }
+        }
+    }
+}
+
+

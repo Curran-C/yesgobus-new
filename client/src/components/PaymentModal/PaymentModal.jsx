@@ -22,12 +22,18 @@ const PaymentModal = ({ onCancel }) => {
         <div className="modalwrapper">
           <h1>Payment Successful</h1>
           <h2>You're now one of our Drivers!</h2>
-          <CardWithText billing={true} title={"Billing Detials"} user={user} />
-          <CardWithText
-            billing={false}
-            title={"Billing Detials"}
-            address={address}
-          />
+          <div className="cardsWithText">
+            <CardWithText
+              billing={true}
+              title={"Billing Detials"}
+              user={user}
+            />
+            <CardWithText
+              billing={false}
+              title={"Billing Detials"}
+              address={address}
+            />
+          </div>
           <div className="buttons">
             <Button text={"View Invoice"} />
             <Button text={"Download Invoice"} />
