@@ -21,6 +21,7 @@ const AadharModal = ({ onCancel, typeOfDocument, user, setUser }) => {
     authenticateAndGetToken();
   }, []);
 
+  //send aadhaar otp
   const sendOtp = async () => {
     try {
       const requestData = {
@@ -39,6 +40,7 @@ const AadharModal = ({ onCancel, typeOfDocument, user, setUser }) => {
     }
   };
 
+  //verify aadhar otp
   const verifyOtp = async () => {
     try {
       const requestData = {
@@ -65,12 +67,14 @@ const AadharModal = ({ onCancel, typeOfDocument, user, setUser }) => {
         access_token: accessToken, 
       };
       const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/kyc/pan/verify`, requestData);
-      if (response.data?.data?.status === 'VALID') {
+      if (
+        response.data?.data?.status === 'VALID' &&
+        response.data?.data?.full_name.toLowerCase().includes(user.firstName.toLowerCase())
+        ) {
         alert ("Verified Successfully");
       } else {
         alert("Invalid");
       }
-
     } catch (err) {
       console.error("Error while verifying pan:", err);
     }

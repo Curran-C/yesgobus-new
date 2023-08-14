@@ -53,10 +53,13 @@ const KYC = () => {
         access_token: accessToken, 
       };
       const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/kyc/bank/verify`, requestData);
-      if (response.data?.data?.message === 'Bank Account details verified successfully.') {
+      if (
+        response.data?.data?.message === 'Bank Account details verified successfully.' && 
+        response.data?.data?.name_at_bank.toLowerCase().includes(user.accHolderName.toLowerCase())
+        ) {
         alert("Account verified");
       } else {
-        alert("Invalid");
+        alert("Invalid"); 
       }
     } catch (err) {
       console.error("Error while verifying bank details:", err);
