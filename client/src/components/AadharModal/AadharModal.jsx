@@ -13,18 +13,25 @@ const AadharModal = ({ onCancel, typeOfDocument, user, setUser }) => {
       "x-api-version": "1.0",
     },
   };
-  
+
   const sendOtp = async () => {
     console.log(user?.aadhar);
     try {
       // *authenticate
       const authTokenOne = await axios.post(
-        "https://api.sandbox.co.in/authenticate",
+        `${import.meta.env.VITE_BASE_URL}/api/aadharkyc/authenticate`,
         {
           aadhaar_number: user?.aadhar,
         },
         authenticateConfig
       );
+      //   const authTokenOne = await axios.post(
+      //     "https://api.sandbox.co.in/authenticate",
+      //     {
+      //       aadhaar_number: user?.aadhar,
+      //     },
+      //     authenticateConfig
+      //   );
       console.log("one: ", authTokenOne);
       // *authorize
       const authTokenTwo = await axios.post(

@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { logo } from "../../assets";
 import {
   air,
@@ -31,6 +32,7 @@ import {
 import "./LandingPage.scss";
 
 const LandingPage = () => {
+  const navigate = useNavigate();
   return (
     <div className="landingPage">
       <Navbar />
@@ -40,7 +42,7 @@ const LandingPage = () => {
           <h1>
             PROVIDING QUALITY SERVICES AT <span>AFFORDABLE PRICES</span>
           </h1>
-          <Button text={"Become a Driver"} />
+          <Button onClicked={() => navigate("/kyc")} text={"Become a Driver"} />
           <p></p>
         </div>
       </div>

@@ -9,7 +9,9 @@ const Navbar = () => {
       {/*logo*/}
       {/* navlinks */}
       <div className="left">
-        <img src={logo} alt="" />
+        <a href="/">
+          <img src={logo} alt="" />
+        </a>
         <a>
           <span>Cab</span>
         </a>

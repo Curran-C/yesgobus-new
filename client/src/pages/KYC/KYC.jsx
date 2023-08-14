@@ -163,7 +163,7 @@ const KYC = () => {
         </div>
       </div>
       <div className="nextButton">
-        <Button onClicked={() => console.log(user)} text={"Next"} />
+        <Button onClicked={() => navigate("/kyc/payment")} text={"Next"} />
       </div>
     </div>
   );
