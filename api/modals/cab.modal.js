@@ -41,6 +41,10 @@ const cabSchema = new Schema(
       type: Number,
       required: true
     },
+    taxPercentage: {
+      type: Number,
+      // required: true
+    },
     fuelType: {
       type: String,
       required: true

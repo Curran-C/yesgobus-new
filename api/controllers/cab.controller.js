@@ -4,9 +4,11 @@ import Cab from "../modals/cab.modal.js";
 export const addCabDetails = async (req, res) => {
   try {
     const driverId = req.body.userId;
+    const location = req.body.location.toLowerCase();
     const newCab = new Cab({
       ...req.body,
       driverId: driverId,
+      location: location,
     });
     await newCab.save();
     res.status(200).send({ message: "Cab details added successfully", data: newCab });

@@ -16,6 +16,10 @@ const driverSchema = new Schema(
       type: String,
       required: true
     },
+    profileUrl: {
+      type: String,
+      // required: true
+    },
     email: {
       type: String,
       required: true
