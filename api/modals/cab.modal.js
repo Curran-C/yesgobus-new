@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
-const cabSchema = new mongoose.Schema(
+const cabSchema = new Schema(
   {
     driverId: {
       type: Schema.Types.ObjectId,
@@ -12,6 +12,10 @@ const cabSchema = new mongoose.Schema(
     cabNumberPlate: {
       type: String,
       required: true
+    },
+    cabImageUrl: {
+      type: String,
+      // required: true
     },
     seatingCapacity: {
       type: Number,

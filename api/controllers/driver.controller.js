@@ -13,7 +13,7 @@ export const signUp = async (req, res) => {
         password: hashedPassword,
       });
       await newUser.save();
-      res.status(200).send({message: "SignUp Successfull"});
+      res.status(200).send({message: "SignUp Successfull", data: newUser});
     } else {
       res.status(200).send({ message: "User already exists" });
     }
@@ -42,7 +42,7 @@ export const signIn = async (req, res) => {
       // httpOnly: true, 
       maxAge: 3600000, 
     });
-    res.status(200).send({ message: "Successfully signed in", token: token });
+    res.status(200).send({ message: "Successfully signed in", token: token, data: existingUser });
   } catch (err) {
     console.log(err);
     res.status(500).send({ message: err });
