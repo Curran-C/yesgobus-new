@@ -25,7 +25,7 @@ const KYC = () => {
   const [user, setUser] = useState({});
   const handleRegister = async () => {
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/user/signup`, user);
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/driver/signup`, user);
       alert(response.data.message);
     } catch (error) {
       console.error("Error registering user:", error);

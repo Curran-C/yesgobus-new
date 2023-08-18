@@ -5,8 +5,9 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 
 //routes
-import userRoutes from "../api/routes/user.routes.js";
-import kycroutes from "./routes/verifykyc.routes.js";
+import driverRoutes from "../api/routes/driver.routes.js";
+import kycRoutes from "./routes/verifykyc.routes.js";
+import cabRoutes from "./routes/cab.routes.js"
 
 dotenv.config();
 const app = express();
@@ -28,8 +29,9 @@ app.use(cors({
   credentials: true
 }));
 
-app.use("/api/user", userRoutes);
-app.use("/api/kyc", kycroutes);
+app.use("/api/driver", driverRoutes);
+app.use("/api/kyc", kycRoutes);
+app.use("/api/cab", cabRoutes);
 
 app.listen(PORT, () => {
   connect();

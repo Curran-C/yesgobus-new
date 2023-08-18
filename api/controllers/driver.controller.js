@@ -1,14 +1,14 @@
-import User from "../modals/user.modal.js";
+import Driver from "../modals/driver.modal.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 //register new user
 export const signUp = async (req, res) => {
   try {
-    const existingUser = await User.findOne({ email: req.body.email });
+    const existingUser = await Driver.findOne({ email: req.body.email });
     if (!existingUser) {
       const hashedPassword = bcrypt.hashSync(req.body.password, 5);
-      const newUser = new User({
+      const newUser = new Driver({
         ...req.body,
         password: hashedPassword,
       });
@@ -18,6 +18,7 @@ export const signUp = async (req, res) => {
       res.status(200).send({ message: "User already exists" });
     }
   } catch (err) {
+    console.log(err);
     res.status(500).send({ message: err });
   }
 };
@@ -26,7 +27,7 @@ export const signUp = async (req, res) => {
 export const signIn = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const existingUser = await User.findOne({ email });
+    const existingUser = await Driver.findOne({ email });
     if (!existingUser) {
       return res.status(401).send({ message: "User not found" });
     }
@@ -41,8 +42,9 @@ export const signIn = async (req, res) => {
       // httpOnly: true, 
       maxAge: 3600000, 
     });
-    res.status(200).send({ message: "Successfully signed in" });
+    res.status(200).send({ message: "Successfully signed in", token: token });
   } catch (err) {
+    console.log(err);
     res.status(500).send({ message: err });
   }
 };
