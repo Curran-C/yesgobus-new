@@ -41,9 +41,7 @@ export const updateCabDetails = async (req, res) => {
 // Get cab details by user
 export const getCabDetailsByUser = async (req, res) => {
   try {
-    console.log("hello")
     const driverId = req.params.driverId;
-    console.log(req.params);
     const cabDetails = await Cab.find({ driverId });
 
     if (cabDetails.length === 0) {
@@ -56,3 +54,21 @@ export const getCabDetailsByUser = async (req, res) => {
     res.status(500).send({ message: err });
   }
 };
+
+export const inactiveCab = async (req, res) => {
+  try {
+    const cabId = req.params.id;
+    const updatedCab = await Cab.findByIdAndUpdate(
+      cabId, {
+        cab_status : "Inactive"
+      }
+    );
+    if (!updatedCab) {
+      return res.status(404).send({ message: "Cab not found" });
+    }
+    res.status(200).send({ message: "Cab inactivated successfully", data: updatedCab });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ message: err });
+  }
+}
