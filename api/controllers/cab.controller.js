@@ -1,74 +1,45 @@
-import Cab from "../modals/cab.modal.js";
+import {
+  addCabDetails,
+  updateCabDetails,
+  getCabDetailsByUser,
+  inactiveCab
+} from '../service/cab.service.js';
 
-// Add cab details
-export const addCabDetails = async (req, res) => {
+export const addCabDetailsController = async (req, res) => {
   try {
-    const driverId = req.body.userId;
-    const location = req.body.location.toLowerCase();
-    const newCab = new Cab({
-      ...req.body,
-      driverId: driverId,
-      location: location,
-    });
-    await newCab.save();
-    res.status(200).send({ message: "Cab details added successfully", data: newCab });
+    const result = await addCabDetails(req.body);
+    res.status(result.status).json({ message: result.message, data: result.data });
   } catch (err) {
-    console.log(err);
-    res.status(500).send({ message: err });
+    res.status(500).json({ message: "An error occurred while adding cab details" });
   }
 };
 
-
-export const updateCabDetails = async (req, res) => {
+export const updateCabDetailsController = async (req, res) => {
   try {
-    const cabId = req.params.id;
-    const updatedCab = await Cab.findByIdAndUpdate(
-      cabId, {
-        ...req.body,
-      }
-    );
-    if (!updatedCab) {
-      return res.status(404).send({ message: "Cab not found" });
-    }
-    res.status(200).send({ message: "Cab details updated successfully", data: updatedCab });
+    const { id } = req.params;
+    const result = await updateCabDetails(id, req.body);
+    res.status(result.status).json({ message: result.message, data: result.data });
   } catch (err) {
-    console.log(err);
-    res.status(500).send({ message: err });
+    res.status(500).json({ message: "An error occurred while updating cab details" });
   }
 };
 
-
-// Get cab details by user
-export const getCabDetailsByUser = async (req, res) => {
+export const getCabDetailsByUserController = async (req, res) => {
   try {
-    const driverId = req.params.driverId;
-    const cabDetails = await Cab.find({ driverId });
-
-    if (cabDetails.length === 0) {
-      return res.status(404).send({ message: "No cab details found for the user" });
-    }
-
-    res.status(200).send({ message: "Cab Details retrived successfully", data: cabDetails });
+    const { driverId } = req.params;
+    const result = await getCabDetailsByUser(driverId);
+    res.status(result.status).json({ message: result.message, data: result.data });
   } catch (err) {
-    console.log(err);
-    res.status(500).send({ message: err });
+    res.status(500).json({ message: "An error occurred while fetching cab details" });
   }
 };
 
-export const inactiveCab = async (req, res) => {
+export const inactiveCabController = async (req, res) => {
   try {
-    const cabId = req.params.id;
-    const updatedCab = await Cab.findByIdAndUpdate(
-      cabId, {
-        cab_status : "Inactive"
-      }
-    );
-    if (!updatedCab) {
-      return res.status(404).send({ message: "Cab not found" });
-    }
-    res.status(200).send({ message: "Cab inactivated successfully", data: updatedCab });
+    const { id } = req.params;
+    const result = await inactiveCab(id);
+    res.status(result.status).json({ message: result.message, data: result.data });
   } catch (err) {
-    console.log(err);
-    res.status(500).send({ message: err });
+    res.status(500).json({ message: "An error occurred while inactivating cab" });
   }
-}
+};

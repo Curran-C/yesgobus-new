@@ -1,18 +1,18 @@
 import express from "express";
 import {
-    authenticate,
-    aadhaarKycGenerateOtp,
-    aadhaarKycVerifyOtp,
-    panVerification,
-    bankAccountVerification
+    authenticateController,
+    aadhaarKycGenerateOtpController,
+    aadhaarKycVerifyOtpController,
+    panVerificationController,
+    bankAccountVerificationController
 } from "../controllers/verifykyc.controller.js";
 
 const routes = express.Router();
 
-routes.get("/authenticate", authenticate);
-routes.post("/aadhaar/generateOtp", aadhaarKycGenerateOtp);
-routes.post("/aadhaar/verifyOtp", aadhaarKycVerifyOtp);
-routes.post("/pan/verify", panVerification);
-routes.post("/bank/verify", bankAccountVerification);
+routes.get("/authenticate", authenticateController);
+routes.post("/aadhaar/generateOtp", aadhaarKycGenerateOtpController);
+routes.post("/aadhaar/verifyOtp", aadhaarKycVerifyOtpController);
+routes.post("/pan/verify", panVerificationController);
+routes.post("/bank/verify", bankAccountVerificationController);
 
 export default routes;

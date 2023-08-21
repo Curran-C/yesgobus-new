@@ -1,138 +1,50 @@
-import createSdk from "api";
-import axios from "axios";
+import * as ApiService from '../service/verifykyc.service.js';
 
-const authenticate = async (req, res) => {
+export const authenticateController = async (req, res) => {
   try {
-    const headers = {
-      'accept': 'application/json',
-      'x-api-key': process.env.API_KEY,
-      'x-api-secret': process.env.API_SECRET,
-      'x-api-version': '1.0',
-    };
-    const requestData = {};
-    axios.post("https://api.sandbox.co.in/authenticate", requestData, { headers })
-      .then(response => {
-        res.status(200).send(response.data);
-      })
-      .catch(error => {
-        res.status(200).send(error.message);
-      });
-
+    const response = await ApiService.authenticate();
+    res.status(200).send(response);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send({ message: err });
   }
 };
 
-const aadhaarKycGenerateOtp = async (req, res) => {
+export const aadhaarKycGenerateOtpController = async (req, res) => {
   try {
-    const { access_token } = req.body;
-    const headers = {
-      'Authorization': access_token,
-      'accept': 'application/json',
-      'content-type': 'application/json',
-      'x-api-key': process.env.API_KEY,
-      'x-api-version': '1.0',
-    };
-
-    const requestData = {
-      "aadhaar_number": req.body.aadhaar_number
-    };
-
-    axios.post("https://api.sandbox.co.in/kyc/aadhaar/okyc/otp", requestData, { headers })
-      .then(response => {
-        res.status(200).send(response.data);
-      })
-      .catch(error => {
-        res.status(200).send({message: error.message});
-      });
-
+    const { access_token, aadhaar_number } = req.body;
+    const response = await ApiService.aadhaarKycGenerateOtp(access_token, aadhaar_number);
+    res.status(200).send(response);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send({ message: err });
   }
-}
+};
 
-const aadhaarKycVerifyOtp = async (req, res) => {
+export const aadhaarKycVerifyOtpController = async (req, res) => {
   try {
-    const { access_token } = req.body
-    const headers = {
-      'Authorization': access_token,
-      'accept': 'application/json',
-      'content-type': 'application/json',
-      'x-api-key': process.env.API_KEY,
-      'x-api-version': '1.0',
-    };
-
-    const requestData = {
-      "otp": req.body.otp,
-      "ref_id": req.body.ref_id
-    };
-
-    axios.post("https://api.sandbox.co.in/kyc/aadhaar/okyc/otp/verify", requestData, { headers })
-      .then(response => {
-        res.status(200).send(response.data);
-      })
-      .catch(error => {
-        res.status(200).send({ message: error.message });
-      });
-
+    const { access_token, otp, ref_id } = req.body;
+    const response = await ApiService.aadhaarKycVerifyOtp(access_token, otp, ref_id);
+    res.status(200).send(response);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send({ message: err });
   }
-}
+};
 
-const panVerification = async (req, res) => {
+export const panVerificationController = async (req, res) => {
   try {
     const { access_token, pan } = req.body;
-    const headers = {
-      'Accept': 'application/json',
-      'Authorization': access_token,
-      'x-api-key': process.env.API_KEY,
-      'x-api-version': '1.0',
-    };
-
-    axios.get(
-      `https://api.sandbox.co.in/pans/${pan}/verify?consent=y&reason=For%20KYC%20of%20User`,
-      { headers }
-    )
-      .then(response => {
-        res.status(200).send(response.data);
-      })
-      .catch(error => {
-        res.status(200).send({ message: error.message });
-      });
-
+    const response = await ApiService.panVerification(access_token, pan);
+    res.status(200).send(response);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send({ message: err });
   }
 };
 
-const bankAccountVerification = async (req, res) => {
+export const bankAccountVerificationController = async (req, res) => {
   try {
     const { access_token, ifsc, account_number } = req.body;
-    const headers = {
-      'Authorization': access_token,
-      'x-api-key': process.env.API_KEY,
-      'x-api-version': '1.0.0'
-    };
-
-    axios.get(`https://api.sandbox.co.in/bank/${ifsc}/accounts/${account_number}/verify`, { headers })
-      .then(response => {
-        res.status(200).send(response.data);
-      })
-      .catch(error => {
-        res.status(200).send({ message: error.message });
-      });
-
+    const response = await ApiService.bankAccountVerification(access_token, ifsc, account_number);
+    res.status(200).send(response);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send({ message: err });
   }
 };
-
-export {
-  authenticate,
-  aadhaarKycGenerateOtp,
-  aadhaarKycVerifyOtp,
-  panVerification,
-  bankAccountVerification,
-};
-
