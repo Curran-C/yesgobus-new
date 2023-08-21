@@ -2,73 +2,83 @@ import Button from "../Button/Button";
 import Input from "../Input/Input";
 import "./AadharModal.scss";
 import axios from "axios";
+import { useState, useEffect } from "react";
 
 const AadharModal = ({ onCancel, typeOfDocument, user, setUser }) => {
-  let authenticateConfig = {
-    headers: {
-      accept: "application/json",
-      "content-type": "application/json",
-      "x-api-secret": "secret_live_0t1JqBUOBcMcOoB3dlmDbno4FPT5ezOc",
-      "x-api-key": "key_live_MJ9gDUtmmvuOPurEsZbPvamtObI4ZRYr",
-      "x-api-version": "1.0",
-    },
-  };
+  const [refId, setRefId] = useState("");
+  const [accessToken, setAccessToken] = useState("");
 
+  useEffect(() => {
+    const authenticateAndGetToken = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/kyc/authenticate`);
+        setAccessToken(response.data.access_token);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+    
+    authenticateAndGetToken();
+  }, []);
+
+  //send aadhaar otp
   const sendOtp = async () => {
-    console.log(user?.aadhar);
     try {
-      // *authenticate
-      const authTokenOne = await axios.post(
-        `${import.meta.env.VITE_BASE_URL}/api/aadharkyc/authenticate`,
-        {
-          aadhaar_number: user?.aadhar,
-        },
-        authenticateConfig
-      );
-      //   const authTokenOne = await axios.post(
-      //     "https://api.sandbox.co.in/authenticate",
-      //     {
-      //       aadhaar_number: user?.aadhar,
-      //     },
-      //     authenticateConfig
-      //   );
-      console.log("one: ", authTokenOne);
-      // *authorize
-      const authTokenTwo = await axios.post(
-        `https://api.sandbox.co.in/authorize?request_token=${authTokenOne?.data.access_token}`,
-        { dat: "dat" },
-        {
-          headers: {
-            Authorization: authTokenOne?.data.access_token,
-            accept: "application/json",
-            "x-api-key": "key_live_MJ9gDUtmmvuOPurEsZbPvamtObI4ZRYr",
-            "x-api-version": "1.0",
-          },
-        }
-      );
-      console.log("two: ", authTokenTwo);
-
-      // *verifyotp
-      const refIdForOtp = await axios.post(
-        `https://api.sandbox.co.in/kyc/aadhaar/okyc/otp`,
-        {
-          aadhaar_number: user?.aadhar,
-        },
-        {
-          headers: {
-            Authorization: authTokenTwo?.data.access_token,
-            accept: "application/json",
-            "content-type": "application/json",
-            "x-api-key": "key_live_MJ9gDUtmmvuOPurEsZbPvamtObI4ZRYr",
-            "x-api-version": "1.0",
-          },
-        }
-      );
-      console.log(refIdForOtp);
-    } catch (err) {
-      console.log(err);
+      const requestData = {
+        aadhaar_number: user.aadhar, 
+        access_token: accessToken, 
+      };
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/kyc/aadhaar/generateOtp`, requestData);
+      if (response.data?.data?.message === "OTP sent successfully") {
+        setRefId(response.data.data.ref_id);
+        alert(response.data.data.message);
+      } else {
+        alert("Invalid");
+      }
+    } catch (error) {
+      console.error("Error while Generating aadhaar otp:", error);
     }
   };
+
+  //verify aadhar otp
+  const verifyOtp = async () => {
+    try {
+      const requestData = {
+        otp: user.otp,
+        ref_id: refId,
+        access_token: accessToken, 
+      };
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/kyc/aadhaar/verifyOtp`, requestData);
+      if (response.data?.data?.status === 'VALID') {
+        alert ("Verified Successfully");
+      } else {
+        alert("Invalid");
+      }
+    } catch (err) {
+      console.error("Error while verifying adaar otp:", err);
+    }
+  };
+
+  //verify pan
+  const verifyPan = async () => {
+    try {
+      const requestData = {
+        pan: user.pancard,
+        access_token: accessToken, 
+      };
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/kyc/pan/verify`, requestData);
+      if (
+        response.data?.data?.status === 'VALID' &&
+        response.data?.data?.full_name.toLowerCase().includes(user.firstName.toLowerCase())
+        ) {
+        alert ("Verified Successfully");
+      } else {
+        alert("Invalid");
+      }
+    } catch (err) {
+      console.error("Error while verifying pan:", err);
+    }
+  }
 
   return (
     <div className="SignModal">
@@ -77,7 +87,7 @@ const AadharModal = ({ onCancel, typeOfDocument, user, setUser }) => {
         <div className="modalwrapper">
           <div className="inputs">
             <Input
-              type={"number"}
+              type={"text"}
               placeholder={`Enter ${typeOfDocument} number`}
               onChanged={setUser}
               givenName={`${typeOfDocument?.toLowerCase().split(" ").join("")}`}
@@ -85,8 +95,8 @@ const AadharModal = ({ onCancel, typeOfDocument, user, setUser }) => {
             <Button onClicked={sendOtp} text={"Send OTP"} />
           </div>
           <div className="inputs">
-            <Input type={"number"} placeholder={"OTP"} />
-            <Button text={"Verify"} />
+            <Input type={"number"} placeholder={"OTP"} onChanged={setUser} givenName={"otp"}/>
+            <Button onClicked={verifyOtp} text={"Verify"} />
           </div>
           <div className="buttons">
             <Button text={"Cancel"} onClicked={() => onCancel(false)} />
