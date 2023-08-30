@@ -9,6 +9,7 @@ import driverRoutes from "../api/routes/driver.routes.js";
 import kycRoutes from "./routes/verifykyc.routes.js";
 import cabRoutes from "./routes/cab.routes.js"
 import cabBookingRoutes from "./routes/cabBookings.routes.js"
+import paymentRoutes from "./routes/payment.routes.js";
 
 dotenv.config();
 const app = express();
@@ -35,6 +36,7 @@ app.use("/api/driver", driverRoutes);
 app.use("/api/kyc", kycRoutes);
 app.use("/api/cab", cabRoutes);
 app.use("/api/cabBooking", cabBookingRoutes);
+app.use("/api/payment/", paymentRoutes);
 
 app.listen(PORT, () => {
   connect();
