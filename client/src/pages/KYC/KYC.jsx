@@ -25,9 +25,13 @@ const KYC = () => {
   const [user, setUser] = useState({});
   const handleRegister = async () => {
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/driver/signup`, user);
-      alert(response.data.message);
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/api/driver/signup`,
+        user
+      );
+      navigate("/kyc/payment");
     } catch (error) {
+      alert("Something went wrong");
       console.error("Error registering user:", error);
     }
   };
@@ -35,7 +39,9 @@ const KYC = () => {
   useEffect(() => {
     const authenticateAndGetToken = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/kyc/authenticate`);
+        const response = await axios.get(
+          `${import.meta.env.VITE_BASE_URL}/api/kyc/authenticate`
+        );
         setAccessToken(response.data.access_token);
       } catch (error) {
         console.error("Error:", error);
@@ -44,27 +50,33 @@ const KYC = () => {
 
     authenticateAndGetToken();
   }, []);
-  
+
   const verifyBank = async () => {
     try {
       const requestData = {
         account_number: user.bankAccNum,
-        ifsc: user.ifsc,  
-        access_token: accessToken, 
+        ifsc: user.ifsc,
+        access_token: accessToken,
       };
-      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/kyc/bank/verify`, requestData);
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/api/kyc/bank/verify`,
+        requestData
+      );
       if (
-        response.data?.data?.message === 'Bank Account details verified successfully.' && 
-        response.data?.data?.name_at_bank.toLowerCase().includes(user.accHolderName.toLowerCase())
-        ) {
+        response.data?.data?.message ===
+          "Bank Account details verified successfully." &&
+        response.data?.data?.name_at_bank
+          .toLowerCase()
+          .includes(user.accHolderName.toLowerCase())
+      ) {
         alert("Account verified");
       } else {
-        alert("Invalid"); 
+        alert("Invalid");
       }
     } catch (err) {
       console.error("Error while verifying bank details:", err);
     }
-  }
+  };
   return (
     <div className="KYC">
       <Navbar />
@@ -85,14 +97,14 @@ const KYC = () => {
           onCancel={setShowPancardModal}
         />
       )}
-      {showDLModal && (
+      {/* {showDLModal && (
         <AadharModal
           user={user}
           setUser={setUser}
           typeOfDocument={"Driving License"}
           onCancel={setShowDLModal}
         />
-      )}
+      )} */}
       <div className="details">
         <h1>Complete KYC</h1>
         <p>Personal Details</p>
@@ -156,10 +168,10 @@ const KYC = () => {
                   onClicked={() => setShowPancardModal(true)}
                   text={"Pan Card"}
                 />
-                <Button
+                {/* <Button
                   onClicked={() => setShowDLModal(true)}
                   text={"Driving License"}
-                />
+                /> */}
               </div>
               <h5>Upload ID Proof</h5>
             </div>
