@@ -9,16 +9,16 @@ const Navbar = () => {
 
   const menu = (
     <div className="burger-menu">
-      <a>
+      <a href="/">
         <span>Home</span>
       </a>
       <a>
         <span>Cab</span>
       </a>
-      <a>
+      {/* <a>
         <span>Offers</span>
-      </a>
-      <a>
+      </a> */}
+      <a href="/contactus">
         <span>Contact Us</span>
       </a>
     </div>
@@ -35,10 +35,10 @@ const Navbar = () => {
         <a>
           <span>Cab</span>
         </a>
-        <a>
+        {/* <a>
           <span>Offers</span>
-        </a>
-        <a>
+        </a> */}
+        <a href="/contactus">
           <span>Contact Us</span>
         </a>
       </div>

@@ -14,8 +14,8 @@ const Footer = () => {
     <div className="footer">
       <div className="footerContainer">
         <p>
-          Lorem ipsum dolor sit amet consectetur. Magna integer enim vitae
-          vulputate eu vitae tristique.
+          Where every seat is a window seat: Join us for a hassle-free,
+          comfortable, and convenient bus booking experience.
         </p>
 
         <FooterLinks title={"General"} links={["About Us", "Pricing"]} />
@@ -36,7 +36,7 @@ const Footer = () => {
           images={[fbdark, instagramdark, twitterdark, linkedindark]}
         />
 
-        <div className="subscribe">
+        {/* <div className="subscribe">
           <AboveFooterImages
             title={"Subscribe to our yesgobus"}
             subtitle={"Subscribe to our yesgobus and get more updates"}
@@ -45,7 +45,7 @@ const Footer = () => {
             <input type="email" name="" id="" />
             <Button text={"Join Now"} />
           </form>
-        </div>
+        </div> */}
       </div>
       <p className="rights">2023 - All right reserved</p>
     </div>

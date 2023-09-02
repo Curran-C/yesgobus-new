@@ -12,6 +12,7 @@ import PaymentModal from "./PaymentModal/PaymentModal";
 import Input from "./Input/Input";
 import SignModal from "./SignModal/SignModal";
 import AadharModal from "./AadharModal/AadharModal";
+import Card from "./Card/Card";
 
 export {
   Navbar,
@@ -28,4 +29,5 @@ export {
   Input,
   SignModal,
   AadharModal,
+  Card,
 };
