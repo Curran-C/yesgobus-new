@@ -156,7 +156,7 @@ const LandingPage = () => {
       </div>
 
       <div>
-        <div className="aboveFooter">
+        {/* <div className="aboveFooter">
           <img src={logo} alt="" />
           <AboveFooterImages
             images={[visa, mastercard, rupay]}
@@ -180,7 +180,7 @@ const LandingPage = () => {
             images={[fb, insta, twitter, linkedin]}
             title={"FOLLOW US ON"}
           />
-        </div>
+        </div> */}
         <Footer />
       </div>
     </div>

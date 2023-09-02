@@ -32,7 +32,7 @@ const Navbar = () => {
         <a href="/">
           <img src={logo} alt="" />
         </a>
-        <a>
+        <a href="/comingsoon">
           <span>Cab</span>
         </a>
         {/* <a>
