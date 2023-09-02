@@ -8,10 +8,25 @@ import {
   PaymentModal,
 } from "../../components";
 import "./Payments.scss";
+import axios from "axios";
 
 const Payments = () => {
   const [showPaymentModal, setShowPaymentModal] = useState(false);
-
+  const handlePayment = async () => {
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/api/payment/initiatePayment`,
+        {
+          amount: 10,
+          redirectUrl: `https://yesgobus.com/`
+        }
+      );
+      window.location.replace(response.data.data.instrumentResponse.redirectInfo.url);
+    } catch (error) {
+      alert("Something went wrong");
+      console.error("omething went wrong:", error);
+    }
+  }
   return (
     <div className="Payments">
       <Navbar />
@@ -28,7 +43,7 @@ const Payments = () => {
               <Amount text={"Amount Payable"} amt={"₹4000.00"} />
             </div>
             <Button
-              onClicked={() => setShowPaymentModal(true)}
+              onClicked={() => handlePayment()}
               text={"Pay Now"}
             />
           </div>
